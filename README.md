@@ -1,2 +1,2 @@
 # tuzki
-my project
+Learn 

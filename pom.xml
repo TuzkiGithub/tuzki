@@ -6,7 +6,14 @@
 
     <groupId>groupId</groupId>
     <artifactId>tuzki_learn</artifactId>
+    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>ssm</module>
+        <module>app1</module>
+        <module>app2</module>
+        <module>datastruct</module>
+    </modules>
 
-    
+
 </project>

@@ -1,10 +1,8 @@
 package cn.spring.ssm.aspect.exception;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -16,8 +14,6 @@ import java.util.Map;
  */
 @org.springframework.web.bind.annotation.ControllerAdvice
 public class ControllerAdvice {
-
-    private static final Integer CODE = -10001;
     /**
      * 全局异常捕捉处理
      * @param ex
@@ -25,11 +21,9 @@ public class ControllerAdvice {
      */
     @ResponseBody
     @ExceptionHandler(value = Exception.class)
-    public Map errorHandler(Exception ex) {
-        Map<String, Object> map = new HashMap<>();
-        map.put("code", CODE);
-        map.put("msg", ex.getMessage());
-        return map;
+    public String errorHandler(Exception ex) throws JsonProcessingException {
+        return ex.getMessage();
+//        return JSONResult.returnJSONString(ResultEnum.EXCEPTION.getCode(),ex.getMessage());
     }
 
 }

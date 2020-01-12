@@ -18,7 +18,7 @@ import java.util.List;
  */
 @Mapper
 public interface UserMapper {
-    @SelectKey(statement="SELECT LAST_INSERT_ID()", keyProperty="userId", before=false, resultType=Long.class)
+    @SelectKey(statement = "SELECT LAST_INSERT_ID()", keyProperty = "userId", before = false, resultType = Long.class)
     @Insert("insert into user(username,password) values(#{username},#{password})")
     void insert(User user);
 

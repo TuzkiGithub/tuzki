@@ -9,7 +9,7 @@ import org.springframework.http.HttpStatus;
  * 404跳转页面配置
  */
 @Configuration
-public class ErrorConfigure{
+public class ErrorConfigure {
 
     @Bean
     public WebServerFactoryCustomizer<ConfigurableWebServerFactory> webServerFactoryCustomizer() {

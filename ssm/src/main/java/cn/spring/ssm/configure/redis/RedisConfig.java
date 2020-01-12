@@ -22,6 +22,8 @@ public class RedisConfig extends CachingConfigurerSupport {
      * @param factory
      * @return
      */
+
+    @SuppressWarnings("unchecked")
     @Bean
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory factory) {
 
@@ -72,6 +74,7 @@ public class RedisConfig extends CachingConfigurerSupport {
     public ListOperations<String, Object> listOperations(RedisTemplate<String, Object> redisTemplate) {
         return redisTemplate.opsForList();
     }
+
 
     /**
      * 对无序集合类型的数据操作

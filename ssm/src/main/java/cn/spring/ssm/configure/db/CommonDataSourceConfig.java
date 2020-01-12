@@ -32,21 +32,21 @@ public class CommonDataSourceConfig {
 
     //创建SqlSessionFactory
     @Bean(name = "commonSqlSessionFactory")
-    public SqlSessionFactory commonSqlSessionFactory(@Qualifier("commonDataSource") DataSource dataSource) throws Exception{
-        SqlSessionFactoryBean bean=new SqlSessionFactoryBean();
+    public SqlSessionFactory commonSqlSessionFactory(@Qualifier("commonDataSource") DataSource dataSource) throws Exception {
+        SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         bean.setDataSource(dataSource);
         return bean.getObject();
     }
 
     //创建事务管理器
     @Bean(name = "commonTransactionManager")
-    public DataSourceTransactionManager commonTransactionManager(@Qualifier("commonDataSource") DataSource dataSource){
+    public DataSourceTransactionManager commonTransactionManager(@Qualifier("commonDataSource") DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
     }
 
     //创建SqlSessionTemplate
     @Bean(name = "commonSqlSessionTemplate")
-    public SqlSessionTemplate commonSqlSessionTemplate(@Qualifier("commonSqlSessionFactory") SqlSessionFactory sqlSessionFactory) throws  Exception{
+    public SqlSessionTemplate commonSqlSessionTemplate(@Qualifier("commonSqlSessionFactory") SqlSessionFactory sqlSessionFactory) throws Exception {
         return new SqlSessionTemplate(sqlSessionFactory);
     }
 

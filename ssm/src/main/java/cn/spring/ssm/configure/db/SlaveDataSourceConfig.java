@@ -28,6 +28,9 @@ public class SlaveDataSourceConfig {
     //创建数据源
     @Bean(name = "slaveDataSource")
     public DataSource getSlaveDataSource(SlaveDataSourcePrefix slaveDataSource) throws SQLException {
+        /**
+         * 必须使用XA数据源
+         */
         MysqlXADataSource mysqlXADataSource = new MysqlXADataSource();
         mysqlXADataSource.setUrl(slaveDataSource.getUrl());
         mysqlXADataSource.setPinGlobalTxToPhysicalConnection(true);

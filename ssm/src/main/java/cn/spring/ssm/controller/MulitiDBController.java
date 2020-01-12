@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
  * User: 25414
  * Date: 2019/9/11
  * Time: 17:51
- * Description:测试数据库主从，需要开启虚拟机
+ * Description:测试分布式数据库
  */
 @RestController
 public class MulitiDBController {

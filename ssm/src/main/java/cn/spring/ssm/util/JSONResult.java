@@ -1,9 +1,11 @@
 package cn.spring.ssm.util;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Created with IntelliJ IDEA.
@@ -22,6 +24,10 @@ public class JSONResult<T> {
     private T data;
 
     private static ObjectMapper objectMapper = new ObjectMapper();
+
+    static {
+        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+    }
 
     private JSONResult() {
     }

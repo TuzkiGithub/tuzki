@@ -27,11 +27,11 @@ public class ThreadPoolUtils {
         executor = new ThreadPoolExecutor(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue);
     }
 
-    public void execute(Runnable runnable){
+    public void execute(Runnable runnable) {
         executor.execute(runnable);
     }
 
-    public Future submit(Runnable runnable){
+    public Future submit(Runnable runnable) {
         return executor.submit(runnable);
     }
 

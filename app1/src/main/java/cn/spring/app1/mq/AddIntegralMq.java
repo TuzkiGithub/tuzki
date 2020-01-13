@@ -32,7 +32,7 @@ public class AddIntegralMq {
     @Value("${INITIAL_INTEGRAL}")
     private Integer INITIAL_INTEGRAL;
 
-    @JmsListener(destination = "${spring.activemq.topic}", containerFactory = "jmsTopicListenerContainerFactory")
+    @JmsListener(destination = "${spring.activemq.topic.integral}", containerFactory = "jmsTopicListenerContainerFactory")
     public void receiveSub(String msg, Session session) {
         try {
             log.info("###ReceiveDataMq### consumer isTransacted = {}, acknowledgeMode = {}, data = {}", session.getTransacted(), session.getAcknowledgeMode(), msg);

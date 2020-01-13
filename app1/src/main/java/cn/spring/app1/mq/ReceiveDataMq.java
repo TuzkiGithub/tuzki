@@ -19,7 +19,7 @@ import javax.jms.Session;
 @Slf4j
 public class ReceiveDataMq {
 
-    @JmsListener(destination = "${spring.activemq.topic}", containerFactory = "jmsTopicListenerContainerFactory")
+    @JmsListener(destination = "${spring.activemq.topic.file}", containerFactory = "jmsTopicListenerContainerFactory")
     public void receiveSub(Message message, String msg, Session session) {
         try {
             log.info("###ReceiveDataMq### consumer isTransacted = {}, acknowledgeMode = {}, data = {}", session.getTransacted(), session.getAcknowledgeMode(), msg);

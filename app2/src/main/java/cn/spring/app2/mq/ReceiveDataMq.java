@@ -1,7 +1,11 @@
 package cn.spring.app2.mq;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.activemq.ActiveMQConnectionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jms.annotation.JmsListener;
+import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Component;
 
 import javax.jms.Message;
@@ -20,8 +24,12 @@ import java.util.Random;
 @Slf4j
 public class ReceiveDataMq {
 
-    @JmsListener(destination = "${spring.activemq.topic}", containerFactory = "jmsTopicListenerContainerFactory")
-    public void receiveSub(String msg, Session session, Message message) {
+    @Autowired
+    @Qualifier("topicJms")
+    private JmsTemplate jmsTemplate;
+
+    @JmsListener(destination = "${spring.activemq.topic.file}", containerFactory = "jmsTopicListenerContainerFactory")
+    public void receiveSub(String msg, Session session) {
         try {
             log.info("###ReceiveDataMq### consumer isTransacted = {}, acknowledgeMode = {}, data = {}", session.getTransacted(), session.getAcknowledgeMode(), msg);
             /**

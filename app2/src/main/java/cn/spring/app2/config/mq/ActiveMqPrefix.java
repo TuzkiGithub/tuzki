@@ -33,8 +33,5 @@ public class ActiveMqPrefix {
     private Integer DeliveryMode;////进行持久化配置 1表示非持久化，2表示持久化
     private Integer SessionAcknowledgeMode;//客户端签收模式
     private Boolean isTransacted;//是否开启事务
-    private String topic;
-    private String queue;
-
 
 }

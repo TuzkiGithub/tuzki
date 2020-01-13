@@ -23,7 +23,7 @@ public class DataDistributeMq {
     @Qualifier("topicJms")
     private JmsTemplate jmsTemplate;
 
-    @Value("${spring.activemq.topic}")
+    @Value("${spring.activemq.topic.file}")
     private String pub;
 
 

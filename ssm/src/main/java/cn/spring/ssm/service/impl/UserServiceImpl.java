@@ -4,7 +4,7 @@ import cn.spring.ssm.dao.common.LocalMsgMapper;
 import cn.spring.ssm.dao.common.UserMapper;
 import cn.spring.ssm.model.LocalMsgVO;
 import cn.spring.ssm.model.User;
-import cn.spring.ssm.mq.DataDistributeMq;
+import cn.spring.ssm.mq.AddIntegralMq;
 import cn.spring.ssm.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,18 +45,20 @@ public class UserServiceImpl implements UserService {
     private Integer USER_TIME;
 
     @Autowired
-    private DataDistributeMq dataDistributeMq;
+    private AddIntegralMq addIntegralMq;
 
     /**
-     * 注册
-     * mq赠送积分
-     *
-     * 基于mq实现分布式事务
+     * 注册用户
+     * 1：insert user表
+     * 2：insert integral表（mq）
+     * <p>
+     * <p>
+     * 基于mq实现分布式事务,保证最终一致性
      */
     @Override
     public void register(User user) throws Exception {
         Long data = save(user);
-        dataDistributeMq.distributeData(String.valueOf(data));
+        addIntegralMq.distributeData(String.valueOf(data));
     }
 
     /**

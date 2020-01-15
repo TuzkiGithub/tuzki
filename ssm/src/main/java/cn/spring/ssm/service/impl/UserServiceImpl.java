@@ -2,6 +2,7 @@ package cn.spring.ssm.service.impl;
 
 import cn.spring.ssm.dao.common.LocalMsgMapper;
 import cn.spring.ssm.dao.common.UserMapper;
+import cn.spring.ssm.enum_.LocalMsgEnum;
 import cn.spring.ssm.model.LocalMsgVO;
 import cn.spring.ssm.model.User;
 import cn.spring.ssm.mq.AddIntegralMq;
@@ -71,7 +72,7 @@ public class UserServiceImpl implements UserService {
         userMapper.insert(user);
         LocalMsgVO localMsgVO = new LocalMsgVO();
         localMsgVO.setMsg(user.getUserId().toString())
-                .setStatus("INITIAL")
+                .setStatus(LocalMsgEnum.INITIAL.toString())
                 .setCreate_date(new Date());
         localMsgMapper.save(localMsgVO);
         return user.getUserId();

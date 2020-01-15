@@ -30,11 +30,14 @@ public class IntegralService {
     }
 
     /**
-     * 添加积分，并保存本地方法表
+     * 添加积分，并修改本地方法表状态
      */
     @Transactional
     public void saveWithLocalMsg(Integral integral, String status) {
-        save(integral);
+        Integral record = integralMapper.selectByUserId(integral.getUser_id());
+        if (null == record) {
+            save(integral);
+        }
         localMsgMapper.update(integral.getUser_id().toString(), status);
     }
 }

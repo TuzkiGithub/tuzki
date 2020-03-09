@@ -1,8 +1,16 @@
 package cn.spring.ssm.service.impl;
 
+import cn.spring.ssm.configure.es.ESClient;
 import cn.spring.ssm.dao.common.OrgMapper;
 import cn.spring.ssm.model.Org;
-import cn.spring.ssm.util.DistributeLock;
+import cn.spring.ssm.util.JSONResult;
+import org.elasticsearch.action.bulk.BulkRequest;
+import org.elasticsearch.action.update.UpdateRequest;
+import org.elasticsearch.client.RequestOptions;
+import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.client.indices.CreateIndexRequest;
+import org.elasticsearch.common.settings.Settings;
+import org.elasticsearch.common.xcontent.XContentType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.ValueOperations;
@@ -52,8 +60,39 @@ public class OrgService {
 
     static final Integer ZERO = 0;
 
+    private final String DOC = "_doc";
+
+    private final String INDEX = "org";
+
+    private String es_org_properties = "{\n" +
+            "    \"properties\": {\n" +
+            "        \"id\": {\n" +
+            "            \"type\": \"text\",\n" +
+            "            \"store\": true\n" +
+            "        },\n" +
+            "        \"pid\": {\n" +
+            "            \"type\": \"text\",\n" +
+            "            \"store\": true\n" +
+            "        },\n" +
+            "        \"code\": {\n" +
+            "            \"type\": \"text\",\n" +
+            "            \"store\": true\n" +
+            "        },\n" +
+            "        \"name\":{\n" +
+            "            \"type\": \"text\",\n" +
+            "            \"store\": true,\n" +
+            "            \"analyzer\":\"ik_smart\"\n" +
+            "        },\n" +
+            "       \"label\":{\n" +
+            "            \"type\": \"text\",\n" +
+            "            \"store\": true,\n" +
+            "            \"analyzer\":\"ik_smart\"\n" +
+            "        }\n" +
+            "    }\n" +
+            "}";
+
     @Autowired
-    private DistributeLock distributeLock;
+    private ESClient esClient;
 
     /**
      * 查询组织机构树形结构
@@ -101,7 +140,7 @@ public class OrgService {
          * 为了防止缓存雪崩
          * 根据数据特点进行分类,并将失效时间分散化
          *
-         * 考虑二级缓存，以空间换空间
+         * 考虑二级缓存，以空间换时间
          */
         Random random = new Random();
         int factor = random.nextInt(100);
@@ -129,4 +168,38 @@ public class OrgService {
             }
         }
     }
+
+    /**
+     * 将组织机构数据同步到ES
+     */
+    @SuppressWarnings("unchecked")
+    public void syncOrg2ES() throws Exception {
+        List<Org> orgList;
+        if (!StringUtils.isEmpty(valueOperations.get(ORG_TREE))) {
+            orgList = (List<Org>) valueOperations.get(ORG_TREE);
+        } else {
+            orgList = orgMapper.selectAll();
+        }
+
+        RestHighLevelClient restHighLevelClient = esClient.esClient();
+
+//        CreateIndexRequest request = new CreateIndexRequest(INDEX);
+//        request.settings(Settings.builder().put("index.number_of_shards", 12)
+//                .put("index.number_of_replicas", 1))
+//                .mapping(es_org_properties, XContentType.JSON);
+//        restHighLevelClient.indices().create(request, RequestOptions.DEFAULT);
+
+        BulkRequest bulkRequest = new BulkRequest();
+
+        assert orgList != null;
+        for (Org org : orgList) {
+            String org_json = JSONResult.getObjectMapper().writeValueAsString(org);
+            //批量更新或插入
+            UpdateRequest updateRequest = new UpdateRequest(INDEX, DOC, org.getId()).doc(org_json, XContentType.JSON).upsert(org_json, XContentType.JSON);
+            bulkRequest.add(updateRequest);
+        }
+        //同步执行
+        restHighLevelClient.bulk(bulkRequest, RequestOptions.DEFAULT);
+    }
+
 }

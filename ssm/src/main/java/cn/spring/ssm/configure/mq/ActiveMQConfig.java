@@ -50,16 +50,6 @@ public class ActiveMQConfig {
                 activeMqPrefix.getUrl());
     }
 
-//    @Bean("queueJms")
-//    public JmsTemplate jmsTemplate(Queue queue) {
-//        JmsTemplate jmsTemplate = new JmsTemplate();
-//        jmsTemplate.setDeliveryMode(2);//进行持久化配置 1表示非持久化，2表示持久化
-////        jmsTemplate.setConnectionFactory(activeMQConnectionFactory);
-//        jmsTemplate.setDefaultDestination(queue); //此处可不设置默认，在发送消息时也可设置队列
-//        jmsTemplate.setSessionAcknowledgeMode(4);//客户端签收模式
-//        return jmsTemplate;
-//    }
-
     @Bean("topicJms")
     public JmsTemplate jmsTemplate(ActiveMQConnectionFactory activeMQConnectionFactory) {
         JmsTemplate jmsTemplate = new JmsTemplate();

@@ -5,6 +5,7 @@ import org.apache.http.HttpHost;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestClientBuilder;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -21,27 +22,49 @@ import java.util.ArrayList;
 @Slf4j
 @Configuration
 public class ESClient {
-    private static final String schema = "http"; // 使用的协议
-    private static ArrayList<HttpHost> hostList = null;
 
-    private static int connectTimeOut = 1000; // 连接超时时间
-    private static int socketTimeOut = 30000; // 连接超时时间
-    private static int connectionRequestTimeOut = 500; // 获取连接的超时时间
+    private  ArrayList<HttpHost> hostList;
 
-    private static int maxConnectNum = 100; // 最大连接数
-    private static int maxConnectPerRoute = 100; // 最大路由连接数
+    @Value("${elasticsearch.schema}")
+    private  String schema; // 使用的协议
 
-    static {
+    @Value("${elasticsearch.connectTimeOut}")
+    private  int connectTimeOut; // 连接超时时间
+
+    @Value("${elasticsearch.socketTimeOut}")
+    private  int socketTimeOut; // 连接超时时间
+
+    @Value("${elasticsearch.connectionRequestTimeOut}")
+    private  int connectionRequestTimeOut; // 获取连接的超时时间
+
+    @Value("${elasticsearch.maxConnectNum}")
+    private  int maxConnectNum; // 最大连接数
+
+    @Value("${elasticsearch.maxConnectPerRoute}")
+    private  int maxConnectPerRoute; // 最大路由连接数
+
+    @Value("${elasticsearch.cluster.host}")
+    private String hosts;
+
+    @Value("${elasticsearch.cluster.port}")
+    private String ports;
+
+    private void init() {
         hostList = new ArrayList<>();
-        hostList.add(new HttpHost("127.0.0.1", 9200, schema));
-        hostList.add(new HttpHost("127.0.0.1", 9201, schema));
-        hostList.add(new HttpHost("127.0.0.1", 9202, schema));
-
+        String[] lport = ports.split(",");
+        String[] lhost = hosts.split(",");
+        int nodeNum = lport.length;
+        for (int i = 0; i < nodeNum; i++) {
+            hostList.add(new HttpHost(lhost[i], Integer.parseInt(lport[i]), schema));
+        }
+        log.info("elasticsearch node info: {}", hostList.toString());
     }
+
+
 
     @Bean
     public RestHighLevelClient esClient() {
-        log.info(hostList.toString());
+        init();
         RestClientBuilder builder = RestClient.builder(hostList.toArray(new HttpHost[0]));
         // 异步httpclient连接延时配置
         builder.setRequestConfigCallback(requestConfigBuilder -> {

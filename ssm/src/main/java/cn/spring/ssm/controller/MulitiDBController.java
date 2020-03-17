@@ -44,7 +44,7 @@ public class MulitiDBController {
                 .setName("haha");
         studentMapper_master_master.insert(student);
         return JSONResult.returnJSONString(ResultEnum.SUCCESS.getCode(), ResultEnum.SUCCESS.getMsg());
-    }
+}
 
 
     /**

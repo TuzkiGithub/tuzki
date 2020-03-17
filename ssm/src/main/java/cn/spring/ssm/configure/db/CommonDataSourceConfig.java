@@ -9,6 +9,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 import javax.sql.DataSource;
@@ -22,7 +23,7 @@ import javax.sql.DataSource;
  * Description:
  */
 @Configuration
-@MapperScan(basePackages = "cn.spring.ssm.dao.common", sqlSessionTemplateRef = "commonSqlSessionTemplate")
+@MapperScan(basePackages = {"cn.spring.ssm.dao.common","cn.spring.ssm.dao.es"}, sqlSessionTemplateRef = "commonSqlSessionTemplate")
 public class CommonDataSourceConfig {
     @Bean(name = "commonDataSource")
     @ConfigurationProperties(prefix = "mysql.datasource.common")
@@ -34,6 +35,7 @@ public class CommonDataSourceConfig {
     @Bean(name = "commonSqlSessionFactory")
     public SqlSessionFactory commonSqlSessionFactory(@Qualifier("commonDataSource") DataSource dataSource) throws Exception {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
+        bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:mapper/*.xml"));
         bean.setDataSource(dataSource);
         return bean.getObject();
     }

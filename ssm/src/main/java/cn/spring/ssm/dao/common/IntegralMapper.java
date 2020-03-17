@@ -1,4 +1,4 @@
-package cn.spring.ssm.dao.integral;
+package cn.spring.ssm.dao.common;
 
 import cn.spring.ssm.model.Integral;
 import org.apache.ibatis.annotations.Insert;
@@ -12,7 +12,7 @@ import org.apache.ibatis.annotations.Mapper;
  * Time: 18:11
  * Description:
  */
-//@Mapper
+@Mapper
 public interface IntegralMapper {
 
     @Insert("insert into integral(integral,user_id) values(#{integral},#{user_id})")

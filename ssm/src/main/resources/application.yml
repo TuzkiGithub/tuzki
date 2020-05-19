@@ -1,0 +1,28 @@
+##tomcat config
+server:
+    port: 8888
+    tomcat:
+        max-threads: 800
+        min-SpareThreads: 20
+        uri-encoding: UTF-8
+
+##spring execution config
+spring:
+    http:
+        encoding:
+            charset: UTF-8
+            enabled: true
+            force: true
+    task:
+        execution:
+            pool:
+                core-size: 15
+                max-size: 300
+                queue-capacity: 80
+    profiles:
+        active: db,es,mq,redis
+
+##读取文件线程数
+file:
+    thread:
+        num: 4

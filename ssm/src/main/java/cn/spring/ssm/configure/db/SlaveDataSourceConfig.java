@@ -22,7 +22,7 @@ import java.sql.SQLException;
  * Description:
  */
 @Configuration
-@MapperScan(basePackages = "cn.spring.ssm.dao.slave", sqlSessionTemplateRef = "slaveSqlSessionTemplate")
+@MapperScan(basePackages = "cn.spring.ssm.web.dao.slave", sqlSessionTemplateRef = "slaveSqlSessionTemplate")
 public class SlaveDataSourceConfig {
 
     //创建数据源

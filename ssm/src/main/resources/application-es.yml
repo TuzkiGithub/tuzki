@@ -1,0 +1,12 @@
+##elasticsearch config
+elasticsearch:
+    cluster:
+        host: 127.0.0.1,127.0.0.1,127.0.0.1
+        port: 9200,9201,9202
+    connectTimeOut: 1000
+    connectionRequestTimeOut: 500
+    maxConnectNum: 100
+    maxConnectPerRoute: 100
+    schema: http
+    socketTimeOut: 30000
+

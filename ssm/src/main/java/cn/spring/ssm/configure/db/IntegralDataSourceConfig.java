@@ -22,7 +22,7 @@ import javax.sql.DataSource;
  * Description:
  */
 @Configuration
-@MapperScan(basePackages = "cn.spring.ssm.dao.integral", sqlSessionTemplateRef = "integralSqlSessionTemplate")
+@MapperScan(basePackages = "cn.spring.ssm.web.dao.integral", sqlSessionTemplateRef = "integralSqlSessionTemplate")
 public class IntegralDataSourceConfig {
     @Bean(name = "integralDataSource")
     @ConfigurationProperties(prefix = "mysql.datasource.integral")

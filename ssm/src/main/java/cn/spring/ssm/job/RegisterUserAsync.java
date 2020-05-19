@@ -1,8 +1,8 @@
 package cn.spring.ssm.job;
 
-import cn.spring.ssm.dao.integral.IntegralMapper;
-import cn.spring.ssm.model.Integral;
-import cn.spring.ssm.model.User;
+import cn.spring.ssm.web.dao.common.IntegralMapper;
+import cn.spring.ssm.web.model.Integral;
+import cn.spring.ssm.web.model.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
  * User: 25414
  * Date: 2019/10/28
  * Time: 14:06
- * Description:
+ * Description:注册用户异步任务，增加积分
  */
 @Slf4j
 @Component

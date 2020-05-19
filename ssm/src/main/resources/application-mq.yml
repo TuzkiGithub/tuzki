@@ -1,0 +1,36 @@
+##mq config
+spring:
+  activemq:
+    url: tcp://localhost:61616
+    user: admin
+    password: admin
+    ##是否发布订阅模式
+    pub_sub: true
+    ##是否使用连接池
+    enable_pool: true
+    ##是否在每次尝试重新发送失败后,增长这个等待时间
+    useExponentialBackOff: true
+    ##重发次数
+    maximumRedelivery: 10
+    ##设置重发最大拖延时间，-1表示没有拖延;只有UseExponentialBackOff(true)为true时生效
+    maximumRedeliveryDelay: -1
+    ##重发时间间隔
+    initialRedeliveryDelay: 2
+    ##第一次失败后重新发送之前等待500毫秒,第二次失败再等待500 * 2毫秒,这里的2就是value
+    backOffMultiplier: 2
+    ##是否避免消息碰撞
+    useCollisionAvoidance: false
+    ##进行持久化配置 1表示非持久化，2表示持久化
+    DeliveryMode: 2
+    ##客户端签收模式
+    SessionAcknowledgeMode: 4
+    ##是否开启事务
+    isTransacted: true
+    ##自定义队列、主题名
+    queue: queue
+    topic:
+      file: file_topic
+      integral: integral_topic
+
+
+

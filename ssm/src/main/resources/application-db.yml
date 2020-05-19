@@ -1,0 +1,49 @@
+##master db config
+mysql:
+  datasource:
+    master:
+      url: jdbc:mysql://localhost:3306/master?useUnicode=true&characterEncoding=UTF-8&useSSL=true&serverTimezone=UTC
+      username: root
+      password: root
+      borrowConnectionTimeout: 30
+      loginTimeout: 30
+      maintenanceInterval: 60
+      maxIdleTime: 60
+      maxLifetime: 20000
+      maxPoolSize: 25
+      minPoolSize: 10
+
+##slave db config
+    slave:
+      url: jdbc:mysql://localhost:3306/slave?useUnicode=true&characterEncoding=UTF-8&useSSL=true&serverTimezone=UTC
+      username: root
+      password: root
+      borrowConnectionTimeout: 30
+      loginTimeout: 30
+      maintenanceInterval: 60
+      maxIdleTime: 60
+      maxLifetime: 20000
+      maxPoolSize: 25
+      minPoolSize: 10
+
+##common db config
+    common:
+      jdbc-url: jdbc:mysql://localhost:3306/db_tuzki?useUnicode=true&characterEncoding=UTF-8&useSSL=true&serverTimezone=UTC
+      username: root
+      password: root
+      drive: com.mysql.jdbc.Driver
+
+##integral db config
+    integral:
+      jdbc-url: jdbc:mysql://localhost:3306/db_tuzki?useUnicode=true&characterEncoding=UTF-8&useSSL=true&serverTimezone=UTC
+      username: root
+      password: root
+      drive: com.mysql.jdbc.Driver
+
+
+##mybatis config
+
+mybatis:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+

@@ -23,7 +23,7 @@ import javax.sql.DataSource;
  * Description:
  */
 @Configuration
-@MapperScan(basePackages = {"cn.spring.ssm.dao.common","cn.spring.ssm.dao.es"}, sqlSessionTemplateRef = "commonSqlSessionTemplate")
+@MapperScan(basePackages = {"cn.spring.ssm.web.dao.common","cn.spring.ssm.web.dao.es"}, sqlSessionTemplateRef = "commonSqlSessionTemplate")
 public class CommonDataSourceConfig {
     @Bean(name = "commonDataSource")
     @ConfigurationProperties(prefix = "mysql.datasource.common")

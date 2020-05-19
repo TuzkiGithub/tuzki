@@ -1,0 +1,21 @@
+##redis config
+DISTRIBUTE_LOCK: DISTRIBUTE_LOCK
+LOCK_TIME: 60
+ORG: ORG
+ORG_HOT_TIME: 360
+ORG_ICE_TIME: 600
+ORG_TREE: ORG_TREE
+SECKILL_NUM: SECKILL_NUM
+jedis:
+    maxIdle: 100
+    maxTotal: 100
+    timeout: 10000
+spring:
+    redis:
+        host: 127.0.0.1
+        port: 6379
+        timeout: 3s
+        user:
+            list:
+                key: USER_LIST
+                time: 60
